@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini IA en HTML</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; }
+    .user { color: blue; }
+    .bot { color: green; }
+    input[type=text] { width: 80%; padding: 10px; }
+    button { padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Mini IA - Responde lo que sea</h1>
+  <div id="chat"></div>
+  <input type="text" id="input" placeholder="Escribe algo..." />
+  <button onclick="responder()">Enviar</button>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+
+    function responder() {
+      const textoUsuario = input.value.trim();
+      if (!textoUsuario) return;
+
+      agregarMensaje('user', textoUsuario);
+      input.value = '';
+
+      // Respuestas simples basadas en palabras clave
+      let respuesta = '';
+
+      if (textoUsuario.toLowerCase().includes('hola')) {
+        respuesta = '¡Hola! ¿En qué puedo ayudarte?';
+      } else if (textoUsuario.toLowerCase().includes('cómo estás')) {
+        respuesta = 'Estoy bien, gracias por preguntar.';
+      } else if (textoUsuario.toLowerCase().includes('qué puedes hacer')) {
+        respuesta = 'Puedo responder cosas simples basadas en palabras clave.';
+      } else {
+        respuesta = 'Lo siento, no entiendo esa pregunta.';
+      }
+
+      setTimeout(() => agregarMensaje('bot', respuesta), 500);
+    }
+
+    function agregarMensaje(clase, texto) {
+      const div = document.createElement('div');
+      div.className = clase;
+      div.textContent = texto;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // Para que envíe con Enter
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') responder();
+    });
+  </script>
+</body>
+</html>
